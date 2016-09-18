@@ -1,0 +1,13 @@
+version: '2'
+services:
+  ssh-agent:
+    image: sh4rk/ssh-agent
+    volumes:
+      - '~/.ssh/id_rsa_git:/keys/git:ro'
+  app:
+    image: ruby:2.3
+    command: bash
+    volumes_from:
+      - ssh-agent
+    environment:
+      - "SSH_AUTH_SOCK=/agent/agent.sock"
